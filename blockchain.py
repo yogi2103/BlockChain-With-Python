@@ -1,4 +1,9 @@
 # Initializing our (empty) blockchain list
+genesis_block={
+    'previous_hash': '', 
+    'index':0,
+    'transactionns':[]
+}
 blockchain = []
 open_transactions=[]
 owner='Max'
@@ -14,7 +19,7 @@ def get_last_blockchain_value():
 # The optional one is optional because it has a default value => [1]
 
 
-def add_transaction(sender,recepient,amount=1.0):
+def add_transaction(recepient,sender=owner,amount=1.0):
     """ Append a new value as well as the last blockchain value to the blockchain.
 
     Arguments:
@@ -27,11 +32,18 @@ def add_transaction(sender,recepient,amount=1.0):
         'recepient':recepient,
         'amount':amount
         }
-    open_transactions.append(amount)
+    open_transactions.append(transaction)
     
 
 
 def mine_block():
+    last_block=blockchain[-1]
+    block={
+        'previous_hash': 'XYZ', 
+        'index':len(blockchain),
+        'transactionns':open_transactions
+    }
+    blockchain.append(block)
     pass
 
 def get_transaction_value():
@@ -81,7 +93,9 @@ while waiting_for_input:
     user_choice = get_user_choice()
     if user_choice == '1':
         tx_data = get_transaction_value()
-        add_transaction(tx_amount, get_last_blockchain_value())
+        recepient, amount= tx_data
+        add_transaction(recepient,amount=amount)
+        print(open_transactions)
     elif user_choice == '2':
         print_blockchain_elements()
     elif user_choice == 'h':
